@@ -57,7 +57,6 @@ const ImageCard = () => {
                 </div>
               ))}
 
-              {/* Duplicate set to enable seamless loop */}
               {cards.map((card, index) => (
                 <div key={`set2-${index}`} className="group relative w-64 sm:w-72 lg:w-80 shrink-0  overflow-hidden bg-white shadow-md">
                   <div className="relative h-44 sm:h-52 lg:h-56 overflow-hidden">

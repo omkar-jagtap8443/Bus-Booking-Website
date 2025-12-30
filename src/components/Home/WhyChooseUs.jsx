@@ -1,86 +1,91 @@
-import React from 'react'
-
-
-import { FaLongArrowAltRight } from "react-icons/fa";
+import React from "react";
 
 const WhyChooseUs = () => {
-      const cards = [
+  const cards = [
     {
-      title: "Bus 1",
-      img: "https://i.pinimg.com/1200x/be/d9/5f/bed95f67a0643a9dcd08b39554c52f0e.jpg",
-      desc: "Experience unparalleled comfort and safety with our top-notch bus services, designed to make your journey memorable."
+      title: "Luxury Buses",
+      img: "https://plus.unsplash.com/premium_photo-1661963208071-9a65b048ebaf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=800&q=80",
+      desc: "Enjoy premium buses with spacious seating, comfort and modern amenities."
     },
     {
-      title: "Bus 2",
-      img: "https://i.pinimg.com/1200x/cf/05/65/cf056508031860e97638bf0ff5f2d7f6.jpg",
-       desc: "Experience unparalleled comfort and safety with our top-notch bus services, designed to make your journey memorable."
+      title: "Safe Journeys",
+      img: "https://i.pinimg.com/736x/4a/4d/07/4a4d076906de8283314a41d9c5977826.jpg?auto=format&fit=crop&w=800&q=80",
+      desc: "Professional drivers and strict safety standards for worry-free travel."
     },
     {
-      title: "Bus 3",
-      img: "https://i.pinimg.com/1200x/be/d9/5f/bed95f67a0643a9dcd08b39554c52f0e.jpg",
-       desc: "Experience unparalleled comfort and safety with our top-notch bus services, designed to make your journey memorable."
+      title: "Professional Staff",
+      img: "https://i.pinimg.com/736x/90/b9/f6/90b9f6ed6aa751f6a53db5c5e4e7e298.jpg?auto=format&fit=crop&w=800&q=80",
+      desc: "Well-trained staff ensuring smooth and friendly travel experiences."
     },
     {
-      title: "Bus 4",
-      img: "https://i.pinimg.com/1200x/be/d9/5f/bed95f67a0643a9dcd08b39554c52f0e.jpg",
-       desc: "Experience unparalleled comfort and safety with our top-notch bus services, designed to make your journey memorable."
-       
-    },
+      title: "On-Time Service",
+      img: "https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?auto=format&fit=crop&w=800&q=80",
+      desc: "Punctual departures and arrivals so you always reach on time."
+    }
   ];
 
   return (
-    <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-2xl text-black">
+    <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-2xl">
 
-  <h1 className=" font-serif text-2xl md:text-3xl lg:text-4xl text-orange-400 ">
-    Why Choose Us?
-  </h1>
+      {/* Heading */}
+      <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-orange-400">
+        Why Choose Us?
+      </h1>
 
+      <p className="text-black/60 max-w-3xl mt-2 text-sm md:text-base">
+        The Raj Mudra Travelers is committed to safe, comfortable and affordable
+        travel experiences with exceptional service quality.
+      </p>
 
+      {/* Cards */}
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className="group relative h-[350px] rounded-2xl overflow-hidden shadow-lg"
+          >
+            {/* Background Image */}
+            <img
+              src={card.img}
+              alt={card.title}
+              className="absolute inset-0 w-full h-full object-cover
+                         transition-transform duration-700 ease-out
+                         group-hover:scale-105"
+            />
 
-  
-  <p className="text-black/60  max-w-3xl mt-2 text-sm md:text-base leading-relaxed">
-    The Raj Mudra Travelers is dedicated to delivering safe, comfortable, and
-    affordable travel experiences with exceptional service quality.
-  </p>
+            {/* Gradient Overlay */}
+            <div
+              className="absolute inset-0 bg-gradient-to-b
+                         from-black/0 via-black/20 to-black/80
+                         translate-y-1/2 group-hover:translate-y-0
+                         transition-transform duration-700 ease-out"
+            />
 
-  
-  <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ">
+            {/* Content */}
+            <div
+              className="relative z-10 h-full flex flex-col justify-end items-center
+                         text-center px-4 pb-6
+                         translate-y-1/3 group-hover:translate-y-0
+                         transition-transform duration-700 ease-out"
+            >
+              <h2 className="text-white text-lg font-bold tracking-wide">
+                {card.title}
+              </h2>
 
-    {cards.map((card, index) => (
-      <div
-        key={index}
-        className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
-      >
-        
-        <div className="h-45 overflow-hidden">
-          <img
-            src={`${card.img}?auto=format&fit=crop&w=800&q=80`}
-            alt={card.title}
-            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-          />
-        </div>
-
-        <div className="p-5 text-center">
-          <h3 className="text-lg font-semibold text-gray-900">
-            {card.title}
-          </h3>
-          <p className="text-gray-600 text-sm mt-2 leading-relaxed">
-            {card.desc}
-           
-          </p>
-          <div className='flex justify-center '> 
-           <button className='text-white cursor-pointer bg-orange-400 py-1 px-2 mt-2'> Read More
-          <FaLongArrowAltRight  className='inline-block ml-2 ' /> </button>
+              <p
+                className="mt-3 text-white/90 text-sm italic
+                           opacity-0 translate-y-4
+                           group-hover:opacity-100 group-hover:translate-y-0
+                           transition-all duration-700 ease-out"
+              >
+                {card.desc}
+              </p>
+            </div>
           </div>
-           
-        </div>
+        ))}
       </div>
-    ))}
+    </div>
+  );
+};
 
-  </div>
-</div>
-
-  )
-}
-
-export default WhyChooseUs
+export default WhyChooseUs;
