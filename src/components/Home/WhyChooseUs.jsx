@@ -42,7 +42,7 @@ const WhyChooseUs = () => {
         {cards.map((card, index) => (
           <div
             key={index}
-            className="group relative h-[350px] rounded-2xl overflow-hidden shadow-lg"
+            className="group relative h-87.5 rounded-2xl overflow-hidden shadow-lg"
           >
             {/* Background Image */}
             <img
@@ -55,7 +55,7 @@ const WhyChooseUs = () => {
 
             {/* Gradient Overlay */}
             <div
-              className="absolute inset-0 bg-gradient-to-b
+              className="absolute inset-0 bg-linear-to-b
                          from-black/0 via-black/20 to-black/80
                          translate-y-1/2 group-hover:translate-y-0
                          transition-transform duration-700 ease-out"
