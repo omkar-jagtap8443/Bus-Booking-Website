@@ -48,7 +48,7 @@ const Footer = () => {
           <div className="text-white/70 text-sm space-y-2 ">
         
             <p>   <MdLocationPin size={25} className='inline-block text-white' /> Pimple Saudagar Main Street Pune, Maharashtra</p>
-            <p > Phone: +91 73852 68443</p>
+            <p > Phone: +91 73852 684430998</p>
             <p> <MdOutlineMailOutline size={20} className='inline-block text-white mr-2'/>Email: omkarjagtap368@gmail.com</p>
           </div>
         </div>
@@ -59,7 +59,7 @@ const Footer = () => {
       <div className="border-t border-white/10"></div>
 
       <div className="text-center text-white/60 text-sm py-4">
-        © 2025 Raj Mudra Travels. All rights reserved.
+        © 2025 Raj Mudra Travels. All rights reserved .
       </div>
 
     </footer>
