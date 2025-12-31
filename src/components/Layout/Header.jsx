@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { FaBusSimple } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
-
+   const navigate=useNavigate();
   return (
     <header className="bg-black text-white w-full">
      
@@ -23,11 +24,11 @@ const Header = () => {
         </h2>
 
        
-        <nav className="hidden sm:flex gap-4 md:gap-6 lg:gap-10">
-          <a className="hover:text-orange-400 transition" href="/">Bus booking</a>
-          <a className="hover:text-orange-400 transition" href="/">About us</a>
-          <a className="hover:text-orange-400 transition" href="/">Services</a>
-          <a className="hover:text-orange-400 transition" href="/">Contact</a>
+        <nav className="hidden sm:flex gap-4 md:gap-6 lg:gap-10 ">
+          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Bus booking</a>
+          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/About" onClick={() => navigate("/About")}>About us</a>
+          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Services</a>
+          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Contact</a>
         </nav>
 
       
@@ -42,7 +43,7 @@ const Header = () => {
       {open && (
         <div className="sm:hidden bg-black border-t border-gray-700 px-4 py-3 space-y-3">
           <a className="block hover:text-orange-400" href="/">Bus booking</a>
-          <a className="block hover:text-orange-400" href="/">About us</a>
+          <a className="block hover:text-orange-400" href="/About" onClick={() => navigate("/About")}>About us</a>
           <a className="block hover:text-orange-400" href="/">Services</a>
           <a className="block hover:text-orange-400" href="/">Contact</a>
         </div>

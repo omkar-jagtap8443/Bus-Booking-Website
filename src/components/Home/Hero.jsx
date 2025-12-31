@@ -12,6 +12,8 @@ import ImageBackground from './ImageBackground'
 
 
 
+
+
 const Hero = (props) => {
   return (
 
@@ -19,14 +21,14 @@ const Hero = (props) => {
 
 
 
-
+   
        <ImageBackground/>
     
     <WhyChooseUs/>
 
     <OurDetails/>
 
-       <ImageCard/>
+     {/*<ImageCard/> */}  
 
        <Aboutbuscompany/>
 
@@ -36,6 +38,10 @@ const Hero = (props) => {
        <Awards/>
 
       < Testimonalies/>
+
+      
+
+
 
    
 

@@ -19,7 +19,7 @@ const WhyChooseUs = () => {
     },
     {
       title: "On-Time Service",
-      img: "https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?auto=format&fit=crop&w=800&q=80",
+      img: "https://plus.unsplash.com/premium_photo-1661963208071-9a65b048ebaf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=800&q=80",
       desc: "Punctual departures and arrivals so you always reach on time."
     }
   ];
@@ -27,8 +27,8 @@ const WhyChooseUs = () => {
   return (
     <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-2xl">
 
-      {/* Heading */}
-      <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-orange-400">
+
+      <h1 className="font-extrabold  text-2xl md:text-3xl lg:text-4xl text-orange-500">
         Why Choose Us?
       </h1>
 
@@ -37,23 +37,22 @@ const WhyChooseUs = () => {
         travel experiences with exceptional service quality.
       </p>
 
-      {/* Cards */}
       <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card, index) => (
           <div
             key={index}
             className="group relative h-87.5 rounded-2xl overflow-hidden shadow-lg"
           >
-            {/* Background Image */}
+         
             <img
               src={card.img}
               alt={card.title}
-              className="absolute inset-0 w-full h-full object-cover
+              className="absolute inset-0 w-full h-full object-cover object-top
                          transition-transform duration-700 ease-out
                          group-hover:scale-105"
             />
 
-            {/* Gradient Overlay */}
+         
             <div
               className="absolute inset-0 bg-linear-to-b
                          from-black/0 via-black/20 to-black/80

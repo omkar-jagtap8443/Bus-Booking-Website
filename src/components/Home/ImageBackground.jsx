@@ -1,30 +1,30 @@
 import React from "react";
+// Go up two levels (../../) to reach the src folder, then into assets
+import BgBus from "../../assets/Images/BgBus.png"; 
 
 const ImageBackground = () => {
   return (
-    <div
-      className="relative w-full h-screen overflow-hidden bg-center bg-cover"
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dauto=format&fit=crop&w=1470&q=80')",
-      }}
+    <div 
+      className="relative w-full h-[100dvh] overflow-hidden bg-center bg-cover bg-no-repeat"
+      style={{ backgroundImage: `url(${BgBus})` }}
     >
+      {/* Dark Overlay to make the text pop */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      <div className="absolute inset-0 bg-black/40"></div>
-
-     
-      <div className="relative z-10 flex items-center justify-center h-full text-center px-4">
-        <div>
-          <h1 className="text-white text-4xl md:text-5xl font-bold">
-            Welcome to Raj <span className="text-orange-400">Mudra </span>Travels
-          </h1>
-          <p className="text-white/90 mt-4 max-w-xl mx-auto">
-            Experience premium travel like never before.
-          </p>
-        x
-
-          <button className="mt-6 bg-orange-400 text-white px-6 py-3 rounded-lg hover:bg-orange-500 transition">
-            Book Now
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+        <h1 className="text-white/90 text-4xl md:text-6xl font-bold italic tracking-tight uppercase">
+         Welcome To <br /> Raj <span className="text-orange-500">Mudra</span> Travels
+        </h1>
+        <p className="text-gray-200 mt-4 max-w-xl text-lg md:text-2xl font-light">
+          Redefining Luxury Intercity Travel.
+        </p>
+        
+        <div className="mt-10 flex flex-wrap justify-center gap-5">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(249,115,22,0.4)]">
+            Book My Seat
+          </button>
+          <button className="bg-white/5 backdrop-blur-lg border border-white/20 text-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">
+            Explore Routes
           </button>
         </div>
       </div>

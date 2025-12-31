@@ -31,7 +31,7 @@ const Footer = () => {
             Quick Links
           </h3>
 
-          <ul className="  text-white/70 text-sm  md: flex flex-col md:items-center lg:items-center gap-2  ">
+          <ul className="  text-white/70 text-sm  md: flex flex-col md:items-center lg:items-center gap-2 ">
             <li><a href="/" className="hover:text-orange-400 transition">Bus Booking</a></li>
             <li><a href="/" className="hover:text-orange-400 transition">About Us</a></li>
             <li><a href="/" className="hover:text-orange-400 transition">Services</a></li>

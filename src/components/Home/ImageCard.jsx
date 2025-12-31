@@ -32,7 +32,7 @@ const ImageCard = () => {
         <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-2xl overflow-hidden">
           <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-orange-400">Our Fleet</h1>
 
-          {/* Continuous horizontal scroller with hover info overlay */}
+  
           <div className="mt-8 relative">
             <div className="marquee-track gap-6" style={{"--marquee-duration":"30s"}}>
               {/* First set */}
