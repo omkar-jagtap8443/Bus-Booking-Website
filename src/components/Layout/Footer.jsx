@@ -4,9 +4,12 @@ import { MdLocationPin } from "react-icons/md";
 
 
 import { MdOutlineMailOutline } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 
 const Footer = () => {
+
+   const navigate=useNavigate();
   return (
     <footer className="bg-black text-white mt-16">
 
@@ -33,7 +36,7 @@ const Footer = () => {
 
           <ul className="  text-white/70 text-sm  md: flex flex-col md:items-center lg:items-center gap-2 ">
             <li><a href="/" className="hover:text-orange-400 transition">Bus Booking</a></li>
-            <li><a href="/" className="hover:text-orange-400 transition">About Us</a></li>
+            <li><a href="/About" className="hover:text-orange-400 transition"onClick={() => navigate("/About")}>About Us</a></li>
             <li><a href="/" className="hover:text-orange-400 transition">Services</a></li>
             <li><a href="/" className="hover:text-orange-400 transition">Contact</a></li>
           </ul>
