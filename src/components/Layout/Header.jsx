@@ -6,7 +6,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
    const navigate=useNavigate();
   return (
-    <header className="bg-black text-white w-full">
+    <header className="bg-black text-white w-full   ">
      
       <div className="flex items-center justify-between h-20 px-3 md:px-6 lg:px-12">
         
