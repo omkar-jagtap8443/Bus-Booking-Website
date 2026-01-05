@@ -7,9 +7,9 @@ const Home = () => {
   return (
     <div className='h-full  bg-[#F8FAFC] '>
 
-      <Header />
+      
       <Hero />
-      <Footer />
+     
 
 
     </div>

@@ -28,7 +28,7 @@ const Header = () => {
           <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Bus booking</a>
           <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/About" onClick={() => navigate("/About")}>About us</a>
           <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Services</a>
-          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/">Contact</a>
+          <a className="hover:text-orange-400 transition-all ease-in-out hover:scale-105" href="/Contact " onClick={()=>navigate("/Contact")}>Contact</a>
         </nav>
 
       
@@ -45,7 +45,7 @@ const Header = () => {
           <a className="block hover:text-orange-400" href="/">Bus booking</a>
           <a className="block hover:text-orange-400" href="/About" onClick={() => navigate("/About")}>About us</a>
           <a className="block hover:text-orange-400" href="/">Services</a>
-          <a className="block hover:text-orange-400" href="/">Contact</a>
+          <a className="block hover:text-orange-400" href="/Contact " onClick={()=>navigate("/Contact")}>Contact</a>
         </div>
       )}
     </header>

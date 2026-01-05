@@ -1,18 +1,15 @@
-import React from "react"
-import Home from "./pages/Home"
-import About from "./pages/About"
-import { Routes, Route } from "react-router-dom"
+import Header from "./components/Layout/Header"
+import Footer from "./components/Layout/Footer"
+import AppRoutes from "./Routes/AppRoutes"
 
 
 function App() {
 
   return (
   <div>
-    <Routes>
-      <Route path="/" element={<Home />} />
-       <Route path="/About" element={<About />} />
-    </Routes>
-   
+    <Header/>
+  <AppRoutes/>
+   <Footer/>
   </div>
   )
 }

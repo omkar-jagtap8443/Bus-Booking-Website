@@ -38,7 +38,7 @@ const Footer = () => {
             <li><a href="/" className="hover:text-orange-400 transition">Bus Booking</a></li>
             <li><a href="/About" className="hover:text-orange-400 transition"onClick={() => navigate("/About")}>About Us</a></li>
             <li><a href="/" className="hover:text-orange-400 transition">Services</a></li>
-            <li><a href="/" className="hover:text-orange-400 transition">Contact</a></li>
+            <li><a href="/Contact" className="hover:text-orange-400 transition" onClick={()=>navigate("/Contact")}>Contact</a></li>
           </ul>
         </div>
 
