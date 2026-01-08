@@ -1,41 +1,44 @@
 import React from "react";
-// Go up two levels (../../) to reach the src folder, then into assets
 import BgBus from "../../assets/Images/BgBus.png"; 
-import Seacrh from "./Seacrh";
+import Search from "./Search";
 
 const ImageBackground = () => {
   return (
-    <div 
-      className="  relative w-full h-screen overflow-hidden bg-center bg-cover bg-no-repeat"
-      style={{ backgroundImage: `url(${BgBus})` }}
-    >
-      {/* Dark Overlay to make the text pop */}
-       
+    <div className="relative w-full min-h-screen flex flex-col">
+      {/* BACKGROUND LAYER */}
+      <div 
+        className="absolute inset-0 w-full h-[85vh] md:h-screen bg-center bg-cover bg-no-repeat z-0"
+        style={{ backgroundImage: `url(${BgBus})` }}
+      >
+        {/* Dark Gradient Overlay for Text Pop */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
+      </div>
 
-
-
-
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-         <Seacrh />
-         
-    
-        <h1 className="text-white/90 text-4xl md:text-6xl font-bold italic tracking-tight uppercase">
-        
-   
-         Welcome To <br /> Raj <span className="text-orange-500">Mudra</span> Travels
+      {/* CONTENT LAYER */}
+      <div className="relative z-10 flex flex-col items-center justify-center pt-24 md:pt-32 pb-40 text-center px-6">
+        <h1 className="text-white text-4xl md:text-7xl font-black italic tracking-tighter uppercase leading-tight">
+          Welcome To <br /> 
+          <span className="text-orange-500 drop-shadow-lg">Raj Mudra</span> Travels
         </h1>
-        <p className="text-gray-200 mt-4 max-w-xl text-lg md:text-2xl font-light">
+        
+        <p className="text-gray-200 mt-6 max-w-xl text-lg md:text-2xl font-medium tracking-wide">
           Redefining Luxury Intercity Travel.
         </p>
-        
-        <div className="mt-10 flex flex-wrap justify-center gap-5">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(249,115,22,0.4)]">
-            Book My Seat
+
+        {/* Hero Action Buttons */}
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 md:px-12 py-4 rounded-2xl font-black transition-all transform hover:-translate-y-1 shadow-xl shadow-orange-900/20 active:scale-95">
+            BOOK MY SEAT
           </button>
-          <button className="bg-white/5 backdrop-blur-lg border border-white/20 text-white px-10 py-4 rounded-full font-bold hover:bg-white/10 transition-all">
-            Explore Routes
+          <button className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 md:px-12 py-4 rounded-2xl font-black hover:bg-white/20 transition-all active:scale-95">
+            EXPLORE ROUTES
           </button>
         </div>
+      </div>
+
+      {/* SEARCH COMPONENT (Overlapping the Hero) */}
+      <div className="relative z-30 w-full -mt-32 md:-mt-24">
+        <Search />
       </div>
     </div>
   );
