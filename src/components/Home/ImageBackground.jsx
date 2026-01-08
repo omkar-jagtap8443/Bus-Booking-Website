@@ -10,12 +10,14 @@ const ImageBackground = () => {
       style={{ backgroundImage: `url(${BgBus})` }}
     >
       {/* Dark Overlay to make the text pop */}
+       
 
 
 
 
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-           <Seacrh/>
+         <Seacrh />
+         
     
         <h1 className="text-white/90 text-4xl md:text-6xl font-bold italic tracking-tight uppercase">
         
