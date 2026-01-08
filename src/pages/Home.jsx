@@ -5,13 +5,8 @@ import Footer from '../components/Layout/Footer'
 
 const Home = () => {
   return (
-    <div className='h-full  bg-[#F8FAFC] '>
-
-      
+    <div className='h-full  bg-[#F8FAFC] '>      
       <Hero />
-     
-
-
     </div>
   )
 }
