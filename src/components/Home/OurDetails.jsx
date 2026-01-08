@@ -48,7 +48,7 @@ const OurDetails = () => {
               The Journey of Raj <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-500 to-orange-600"> Mudra</span>
             </h2>
             <p className="mt-4 text-slate-600 text-lg leading-relaxed">
-              We aren't just moving people; we're moving stories. Our commitment to excellence
+              We aren't just moving people we're moving stories. Our commitment to excellence
               is reflected in every mile we cover.
             </p>
           </div>
