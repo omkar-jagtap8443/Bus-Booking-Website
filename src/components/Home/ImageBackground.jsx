@@ -11,7 +11,7 @@ const ImageBackground = () => {
         style={{ backgroundImage: `url(${BgBus})` }}
       >
         {/* Dark Gradient Overlay for Text Pop */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-transparent" />
       </div>
 
       {/* CONTENT LAYER */}

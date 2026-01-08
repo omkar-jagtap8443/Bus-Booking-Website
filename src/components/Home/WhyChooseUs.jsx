@@ -25,7 +25,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-2xl overflow-hidden">
+    <div className="bg-white/90 mt-6 mx-4 md:mx-10 lg:mx-16 p-6 md:p-10 rounded-md overflow-hidden">
 
 
       <h1 className="font-extrabold  text-2xl md:text-3xl lg:text-4xl text-orange-500">
