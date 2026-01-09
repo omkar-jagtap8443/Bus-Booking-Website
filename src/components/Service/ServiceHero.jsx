@@ -27,9 +27,7 @@ const ServiceHero = () => {
           <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(249,115,22,0.5)]">
             Book Now
           </button>
-          <button className="bg-white/10 backdrop-blur-lg border-2 border-white/30 text-white px-8 py-3 rounded-full font-bold hover:bg-white/20 transition-all">
-            View All Routes
-          </button>
+   
         </div>
       </div>
 
