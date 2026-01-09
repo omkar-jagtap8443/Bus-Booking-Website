@@ -16,7 +16,7 @@ const Search = () => {
 
   return (
     <div className="w-full px-4 max-w-7xl mx-auto">
-      <div className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 md:p-6 border border-white/50">
+      <div className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-4 md:p-6 border border-white/50">
         
         {/* TABS SECTION */}
         <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
