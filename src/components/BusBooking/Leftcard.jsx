@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { 
   FaRegSnowflake, 
   FaChair, 
@@ -34,7 +35,7 @@ const Leftcard = () => {
   ];
 
   return (
-    <div className='hidden lg:block bg-white w-80 ml-35 mt-6 min-h-screen border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-10 '>
+    <div className='hidden lg:block bg-white w-80 ml-35 mt-6 min-h-screen border border-gray-200 rounded-2xl shadow-sm overflow-hidden mb-10 '>    
       {/* Header */}
       <div className=' flex justify-between items-center p-5'>
         <h2 className='font-bold text-gray-700 text-lg'>Filters</h2>
@@ -106,7 +107,10 @@ const Leftcard = () => {
           </button>
         ))}
       </div>
+      
     </div>
+    
+   
   );
 };
 
