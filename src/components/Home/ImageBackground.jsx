@@ -34,7 +34,7 @@ const ImageBackground = () => {
 
         {/* Hero Action Buttons */}
         <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 md:px-12 py-4 rounded-2xl font-black transition-all transform hover:-translate-y-1 shadow-xl shadow-orange-900/20 active:scale-95" onClick={()=>{handleScroll}}>
+          <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 md:px-12 py-4 rounded-2xl font-black transition-all transform hover:-translate-y-1 shadow-xl shadow-orange-900/20 active:scale-95" onClick={handleScroll}>
             BOOK MY SEAT
           </button>
 
@@ -42,7 +42,9 @@ const ImageBackground = () => {
       </div>
 
       {/* SEARCH COMPONENT (Overlapping the Hero) */}
-      <div className="relative z-30 w-full -mt-32 md:-mt-24">
+      <div 
+      ref={sectionRef}
+      className="relative z-30 w-full -mt-32 md:-mt-24" >
         <Search />
       </div>
     </div>
