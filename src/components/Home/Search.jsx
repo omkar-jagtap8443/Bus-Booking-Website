@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 import { 
   FaBus, 
   FaHotel, 
@@ -9,7 +10,10 @@ import {
   FaArrowRightArrowLeft 
 } from "react-icons/fa6";
 
+
 const Search = () => {
+  const navigate=useNavigate();
+
   return (
     <div className="w-full px-4 max-w-7xl mx-auto">
       <div className="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 md:p-6 border border-white/50">
@@ -70,7 +74,7 @@ const Search = () => {
           <div className="lg:col-span-2 mt-2 lg:mt-0 lg:p-1">
             <button className="w-full cursor-pointer py-5 lg:h-full bg-red-600 text-white font-black rounded-2xl lg:rounded-full flex items-center justify-center gap-3 transition-all ">
               <FaMagnifyingGlass className="text-xl group-hover:scale-125 transition-transform" /> 
-              <span className="tracking-widest">SEARCH</span>
+              <span className="tracking-widest"onClick={()=>{navigate("/s-to-d")}}>SEARCH</span>
             </button>
           </div>
 
