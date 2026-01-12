@@ -42,9 +42,6 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'));
 }
 
-app.get('/', (req, res) => {
-    res.json({ message: 'Bus Booking System Backend is running' });
-});
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: Date.now() });
