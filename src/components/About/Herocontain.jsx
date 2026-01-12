@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const Herocontain = () => {
   const trustdata = [
@@ -21,6 +21,17 @@ const Herocontain = () => {
       accent: "bg-orange-500"
     },
   ];
+
+  const handleLearnMore = useCallback(() => {
+    const target = document.getElementById('our-values-section');
+    if (!target) return;
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.classList.add('outline', 'outline-4', 'outline-orange-400');
+    setTimeout(() => {
+      target.classList.remove('outline', 'outline-4', 'outline-orange-400');
+    }, 1800);
+  }, []);
 
   return (
     <section className="w-full bg-white py-20 px-4 md:px-10">
@@ -58,7 +69,11 @@ const Herocontain = () => {
               </p>
               
               <div className="pt-4">
-                <button className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-200 active:scale-95">
+                <button
+                  type="button"
+                  onClick={handleLearnMore}
+                  className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-orange-500 transition-all shadow-lg hover:shadow-orange-200 active:scale-95"
+                >
                   Learn More
                 </button>
               </div>

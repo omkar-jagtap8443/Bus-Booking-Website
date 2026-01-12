@@ -17,7 +17,10 @@ const OurValues = () => {
   ];
 
   return (
-    <section className="relative py-20 px-4 md:px-10 lg:px-20 bg-white overflow-hidden">
+    <section
+      id="our-values-section"
+      className="relative py-20 px-4 md:px-10 lg:px-20 bg-white overflow-hidden transition-[outline-color] duration-500"
+    >
       
       {/* Background Glows for Depth */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-100/40 rounded-full blur-3xl opacity-60" />

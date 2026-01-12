@@ -1,9 +1,7 @@
 import React from 'react'
-import Header from '../components/Layout/Header.jsx'
-import Footer from '../components/Layout/Footer.jsx'
 import Legacyoftrust from '../components/About/Legacyoftrust.jsx'
-
 import Herocontain from '../components/About/Herocontain.jsx'
+import OurValues from '../components/About/Ourvalues.jsx'
 import Foundingteam from '../components/About/Foundingteam.jsx'
 
 const About = () => {
@@ -11,6 +9,7 @@ const About = () => {
     <div className='h-full'>
     <Legacyoftrust/>
      <Herocontain/>
+     <OurValues/>
       <Foundingteam/>
     </div>
   )

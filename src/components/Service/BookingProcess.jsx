@@ -1,6 +1,9 @@
 import React from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 
 const BookingProcess = () => {
+  const goToBooking = useBookingNavigation();
+
   const steps = [
     {
       number: "01",
@@ -106,7 +109,11 @@ const BookingProcess = () => {
 
         {/* CTA Button */}
         <div className="mt-16 text-center">
-          <button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(249,115,22,0.4)]">
+          <button
+            type="button"
+            onClick={() => goToBooking()}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-12 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(249,115,22,0.4)]"
+          >
             Start Booking Now
           </button>
         </div>

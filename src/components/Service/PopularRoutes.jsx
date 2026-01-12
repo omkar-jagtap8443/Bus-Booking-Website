@@ -1,6 +1,9 @@
 import React from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 
 const PopularRoutes = () => {
+  const goToBooking = useBookingNavigation();
+
   const routes = [
     {
       from: "Mumbai",
@@ -115,7 +118,11 @@ const PopularRoutes = () => {
                 </div>
 
                 {/* Book Button */}
-                <button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+                <button
+                  type="button"
+                  onClick={() => goToBooking({ origin: route.from, destination: route.to })}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(249,115,22,0.3)]"
+                >
                   Book This Route
                 </button>
               </div>
@@ -125,7 +132,11 @@ const PopularRoutes = () => {
 
         {/* View All Routes Button */}
         <div className="text-center mt-12">
-          <button className="bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-10 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105">
+          <button
+            type="button"
+            onClick={() => goToBooking()}
+            className="bg-white border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-10 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105"
+          >
             View All Routes
           </button>
         </div>

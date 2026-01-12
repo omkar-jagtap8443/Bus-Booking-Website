@@ -1,6 +1,9 @@
 import React from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 
 const BusFleet = () => {
+  const goToBooking = useBookingNavigation();
+
   const fleet = [
     {
       name: "Executive Class",
@@ -73,7 +76,11 @@ const BusFleet = () => {
 
                     <div className="flex items-center justify-between">
                       <span className="text-white/80 text-sm">{bus.price}</span>
-                      <button className="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105">
+                      <button
+                        type="button"
+                        onClick={() => goToBooking()}
+                        className="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105"
+                      >
                         Book Now
                       </button>
                     </div>

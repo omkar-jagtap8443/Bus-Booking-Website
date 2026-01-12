@@ -1,35 +1,63 @@
-import React from 'react';
-import { MdAccessTime } from "react-icons/md";
-import { FaBus, FaRoute } from "react-icons/fa"; // Swapped for FaRoute for better "City Service" vibe
-import { HiOutlineUsers } from "react-icons/hi"; // Modern outline icons look cleaner
+import React, { useEffect, useState } from 'react';
+import { MdAccessTime } from 'react-icons/md';
+import { FaBus, FaRoute } from 'react-icons/fa';
+import { HiOutlineUsers } from 'react-icons/hi';
+import { fetchMetaSummary } from '../../services/busService';
+
+const defaultStats = [
+  {
+    key: 'heritage',
+    icon: <MdAccessTime className="w-8 h-8" />,
+    value: '30+',
+    label: 'Years of Heritage',
+    description: 'Over three decades of trust and reliability on the road.',
+  },
+  {
+    key: 'routes',
+    icon: <FaBus className="w-8 h-8" />,
+    value: '0',
+    label: 'Active Routes',
+    description: 'Live inventory sourced directly from our operations center.',
+  },
+  {
+    key: 'bookings',
+    icon: <HiOutlineUsers className="w-8 h-8" />,
+    value: '0',
+    label: 'Bookings Confirmed',
+    description: 'Passengers who started journeys with us this season.',
+  },
+  {
+    key: 'destinations',
+    icon: <FaRoute className="w-8 h-8" />,
+    value: '0',
+    label: 'Top Destinations',
+    description: 'Trending cities booked in the past 30 days.',
+  },
+];
 
 const OurDetails = () => {
-  const stats = [
-    {
-      icon: <MdAccessTime className="w-8 h-8" />,
-      value: "30+",
-      label: "Years of Heritage",
-      description: "Over three decades of trust and reliability on the road."
-    },
-    {
-      icon: <FaBus className="w-8 h-8" />,
-      value: "1,200+",
-      label: "Modern Fleet",
-      description: "Premium, well-maintained vehicles for every journey."
-    },
-    {
-      icon: <HiOutlineUsers className="w-8 h-8" />,
-      value: "4,000+",
-      label: "Expert Team",
-      description: "Dedicated professionals ensuring your safety 24/7."
-    },
-    {
-      icon: <FaRoute className="w-8 h-8" />,
-      value: "85+",
-      label: "Destinations",
-      description: "Connecting cities with seamless and punctual services."
-    },
-  ];
+  const [stats, setStats] = useState(defaultStats);
+
+  useEffect(() => {
+    fetchMetaSummary()
+      .then(summary => {
+        setStats(prev => prev.map(item => {
+          if (item.key === 'routes' && summary.routes !== undefined) {
+            return { ...item, value: `${summary.routes}+` };
+          }
+          if (item.key === 'bookings' && summary.bookings !== undefined) {
+            return { ...item, value: `${summary.bookings}+` };
+          }
+          if (item.key === 'destinations' && Array.isArray(summary.topDestinations)) {
+            return { ...item, value: `${summary.topDestinations.length}` };
+          }
+          return item;
+        }));
+      })
+      .catch(() => {
+        // Silent fail keeps default values in place
+      });
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-slate-50 py-16 px-4 md:px-10 lg:px-20">
@@ -57,9 +85,9 @@ const OurDetails = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((item, index) => (
+          {stats.map(item => (
             <div
-              key={index}
+              key={item.key}
               className="group relative bg-white border border-slate-100 p-8 rounded-4xl shadow-sm hover:shadow-2xl hover:shadow-orange-200/50 transition-all duration-500 hover:-translate-y-3"
             >
               {/* Icon Container */}

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 
 const ServiceCategories = () => {
+  const [activeService, setActiveService] = useState(null);
+  const goToBooking = useBookingNavigation();
+
   const services = [
     {
       title: "Luxury Coaches",
@@ -96,17 +100,65 @@ const ServiceCategories = () => {
                 </div>
 
                 {/* Button */}
-                <button className={`w-full py-3 rounded-full font-bold cursor-pointer transition-all duration-300 ${
-                  service.color === 'orange' 
-                    ? 'bg-orange-400 hover:bg-blue-400 text-white ]' 
-                    : 'bg-orange-400 hover:bg-blue-400 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)]'
-                }`}>
+                <button
+                  type="button"
+                  onClick={() => setActiveService(service)}
+                  className={`w-full py-3 rounded-full font-bold cursor-pointer transition-all duration-300 ${
+                    service.color === 'orange' 
+                      ? 'bg-orange-400 hover:bg-blue-400 text-white' 
+                      : 'bg-orange-400 hover:bg-blue-400 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)]'
+                  }`}
+                >
                   Learn More
                 </button>
               </div>
             </div>
           ))}
         </div>
+      
+        {activeService && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+            <div className="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative">
+              <button
+                type="button"
+                onClick={() => setActiveService(null)}
+                className="absolute top-4 right-4 text-sm font-bold text-gray-400 hover:text-gray-600"
+                aria-label="Close details"
+              >
+                Close
+              </button>
+              <h3 className="text-3xl font-black text-gray-900 mb-4">{activeService.title}</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">{activeService.desc}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                {activeService.features.map(feature => (
+                  <div key={feature} className="flex items-center gap-2 text-sm text-gray-700">
+                    <span className="inline-block w-2 h-2 rounded-full bg-orange-400" />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveService(null)}
+                  className="flex-1 border border-gray-200 rounded-2xl py-3 font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveService(null);
+                    goToBooking();
+                  }}
+                  className="flex-1 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl py-3 font-bold shadow-lg"
+                >
+                  Plan This Service
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

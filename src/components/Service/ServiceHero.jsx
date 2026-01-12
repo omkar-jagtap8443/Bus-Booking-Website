@@ -1,6 +1,9 @@
 import React from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 
 const ServiceHero = () => {
+  const goToBooking = useBookingNavigation();
+
   return (
     <div 
       className="relative w-full h-[70vh] md:h-[90vh] overflow-hidden bg-center bg-cover bg-no-repeat"
@@ -24,7 +27,11 @@ const ServiceHero = () => {
         </p>
         
         <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(249,115,22,0.5)]">
+          <button
+            type="button"
+            onClick={() => goToBooking()}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(249,115,22,0.5)]"
+          >
             Book Now
           </button>
    

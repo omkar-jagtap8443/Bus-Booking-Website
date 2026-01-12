@@ -1,4 +1,5 @@
 import React from "react";
+import useBookingNavigation from "../../hooks/useBookingNavigation";
 import { 
   FaThermometerHalf, 
   FaWifi, 
@@ -12,6 +13,8 @@ import {
 } from "react-icons/fa";
 
 const Amenities = () => {
+  const goToBooking = useBookingNavigation();
+
   const amenities = [
     {
       icon: FaThermometerHalf,
@@ -103,7 +106,11 @@ const Amenities = () => {
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
               Book your journey now and enjoy all these amazing amenities at no extra cost.
             </p>
-            <button className="bg-blue-400  hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg">
+            <button
+              type="button"
+              onClick={() => goToBooking()}
+              className="bg-blue-400  hover:bg-orange-500 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg"
+            >
               Book Your Seat Now
             </button>
           </div>
