@@ -4,8 +4,7 @@ const connectDB = async () => {
 	const uri = process.env.MONGO_URI;
 
 	if (!uri) {
-		console.warn('⚠️  MONGO_URI is not defined. Backend will run without database connectivity.');
-		return null;
+		throw new Error('MONGO_URI is not defined. Set it in Backend/.env before starting the server.');
 	}
 
 	if (mongoose.connection.readyState === 1) {

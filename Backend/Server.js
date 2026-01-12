@@ -57,13 +57,13 @@ app.use(errorHandler);
 const bootstrap = async () => {
     try {
         await connectDB();
+        app.listen(PORT, () => {
+            console.log(`🚍 Bus Booking API ready on port ${PORT}`);
+        });
     } catch (error) {
-        console.warn('Running without database connection:', error.message);
+        console.error('Unable to start server without database:', error.message);
+        process.exit(1);
     }
-
-    app.listen(PORT, () => {
-        console.log(`🚍 Bus Booking API ready on port ${PORT}`);
-    });
 };
 
 bootstrap();

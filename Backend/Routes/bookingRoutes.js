@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createBooking, getBookingByReference } from '../Controllers/bookingController.js';
+import { createBooking, getBookingByReference, listBookings } from '../Controllers/bookingController.js';
 
 const router = Router();
 
-router.post('/', createBooking);
+router.route('/').post(createBooking).get(listBookings);
 router.get('/:reference', getBookingByReference);
 
 export default router;

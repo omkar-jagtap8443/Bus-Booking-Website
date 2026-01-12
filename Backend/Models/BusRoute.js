@@ -46,6 +46,7 @@ const busRouteSchema = new mongoose.Schema(
     },
     highlights: [{ type: String }],
     heroImage: { type: String },
+    externalSource: { type: Boolean, default: false },
     departureSlot: {
       type: String,
       enum: ['BEFORE_10_AM', 'TEN_TO_FIVE_PM', 'FIVE_TO_ELEVEN_PM', 'AFTER_11_PM'],
@@ -57,7 +58,7 @@ const busRouteSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-busRouteSchema.pre('save', function setDerivedFields(next) {
+busRouteSchema.pre('save', function setDerivedFields() {
   const departureMinutes = timeToMinutes(this.departureTime);
   const arrivalMinutes = timeToMinutes(this.arrivalTime);
 
@@ -69,8 +70,6 @@ busRouteSchema.pre('save', function setDerivedFields(next) {
     const rawDuration = arrivalMinutes - departureMinutes;
     this.travelDurationMins = rawDuration > 0 ? rawDuration : (1440 + rawDuration);
   }
-
-  next();
 });
 
 busRouteSchema.index({ originCity: 1, destinationCity: 1, departureMinutes: 1 });
