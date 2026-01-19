@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
+import mongoose from 'mongoose';
 import BusRoute from '../Models/BusRoute.js';
+import Booking from '../Models/Booking.js';
 import { fetchExternalRoutes } from '../utils/externalRoutes.js';
+import { buildSeatLabels, buildSeatLayout, hydrateReservedSet } from '../utils/seatPlanner.js';
+import { upsertRouteFromSnapshot } from '../utils/routeSnapshot.js';
 
 const sortMap = {
   price: { fare: 1 },
@@ -164,6 +168,75 @@ export const createRoute = async (req, res, next) => {
   try {
     const route = await BusRoute.create(req.body);
     res.status(201).json(route);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRouteSeatMap = async (req, res, next) => {
+  try {
+    const { id: identifier } = req.params;
+    const travelDateInput = req.query.travelDate;
+    const normalizedDate = dayjs(travelDateInput).isValid()
+      ? dayjs(travelDateInput).format('YYYY-MM-DD')
+      : null;
+
+    if (!normalizedDate) {
+      return res.status(400).json({ message: 'Provide a valid travelDate (YYYY-MM-DD)' });
+    }
+
+    let route = null;
+    if (mongoose.isValidObjectId(identifier)) {
+      route = await BusRoute.findById(identifier).lean();
+    }
+
+    if (!route) {
+      const normalizedCode = typeof identifier === 'string' ? identifier.toUpperCase() : identifier;
+      route = await BusRoute.findOne({ routeCode: normalizedCode }).lean();
+    }
+
+    if (!route) {
+      return res.status(404).json({ message: 'Route not found' });
+    }
+
+    const seatLabels = buildSeatLabels(route.totalSeats);
+    const bookings = await Booking.find({
+      route: route._id,
+      travelDate: normalizedDate,
+      status: { $ne: 'cancelled' },
+    })
+      .select('seatNumbers seats')
+      .lean();
+
+    const reservedSet = hydrateReservedSet(bookings, seatLabels);
+    const seatMap = buildSeatLayout(seatLabels, reservedSet);
+    const total = seatLabels.length;
+    const booked = reservedSet.size;
+
+    res.json({
+      travelDate: normalizedDate,
+      seatMap,
+      summary: {
+        total,
+        booked,
+        available: Math.max(total - booked, 0),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const materializeExternalRoute = async (req, res, next) => {
+  try {
+    const payload = req.body?.routeSnapshot || req.body || {};
+    const route = await upsertRouteFromSnapshot(payload);
+
+    if (!route) {
+      return res.status(400).json({ message: 'Unable to sync route snapshot' });
+    }
+
+    res.json(route.toJSON());
   } catch (error) {
     next(error);
   }
