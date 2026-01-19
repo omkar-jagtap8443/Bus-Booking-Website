@@ -32,9 +32,8 @@ const Leftcard = ({ filters, onChange, priceBounds }) => {
   const sliderValue = Math.min(Math.max(filters.maxPrice || maxPrice, minPrice), maxPrice);
 
   const handleBusTypeToggle = (value) => {
-    const current = filters.busTypes || [];
-    const exists = current.includes(value);
-    const updated = exists ? current.filter(item => item !== value) : [...current, value];
+    const current = filters.busTypes?.[0];
+    const updated = current === value ? [] : [value];
     onChange({ busTypes: updated });
   };
 
