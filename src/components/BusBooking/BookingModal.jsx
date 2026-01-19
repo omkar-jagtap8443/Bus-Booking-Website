@@ -1,16 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { fetchRouteSeatMap, syncExternalRoute } from '../../services/busService';
 
 const initialState = {
   passengerName: '',
   passengerEmail: '',
   passengerPhone: '',
-  seats: 1,
   boardingPoint: '',
   notes: '',
 };
 
+const buildDefaultSeatState = () => ({
+  seatMap: [],
+  summary: { total: 0, booked: 0, available: 0 },
+});
+
+const MAX_SELECTABLE_SEATS = 6;
+
+const looksLikeObjectId = value => typeof value === 'string' && /^[0-9a-fA-F]{24}$/.test(value);
+
+const buildExternalSnapshot = route => {
+  if (!route?.externalSource) {
+    return undefined;
+  }
+
+  const {
+    id,
+    _id,
+    externalSource,
+    ...rest
+  } = route;
+
+  return {
+    ...rest,
+    routeCode: route.routeCode,
+    travelDurationMins: route.travelDurationMins,
+    availableSeats: route.availableSeats,
+    totalSeats: route.totalSeats,
+    departureMinutes: route.departureMinutes,
+    arrivalMinutes: route.arrivalMinutes,
+    externalSource: true,
+  };
+};
+
 const BookingModal = ({ route, travelDate, onClose, onConfirm, isSubmitting }) => {
   const [formState, setFormState] = useState(initialState);
+  const [seatState, setSeatState] = useState(buildDefaultSeatState);
+  const [seatLoading, setSeatLoading] = useState(false);
+  const [seatError, setSeatError] = useState('');
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [persistedRouteId, setPersistedRouteId] = useState('');
 
   useEffect(() => {
     if (route) {
@@ -18,8 +56,64 @@ const BookingModal = ({ route, travelDate, onClose, onConfirm, isSubmitting }) =
         ...initialState,
         boardingPoint: route.boardingPoints?.[0] || '',
       });
+      setSeatState(buildDefaultSeatState());
+      setSeatError('');
+      setSelectedSeats([]);
+      setPersistedRouteId(route.id || '');
     }
   }, [route]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const loadSeatState = async () => {
+      if (!route || !travelDate) {
+        return;
+      }
+
+      setSelectedSeats([]);
+      setSeatLoading(true);
+      setSeatError('');
+
+      try {
+        let identifier = route.id;
+        if (route.externalSource && !looksLikeObjectId(identifier)) {
+          const syncedRoute = await syncExternalRoute(buildExternalSnapshot(route));
+          identifier = syncedRoute?.id || syncedRoute?._id;
+          if (isMounted) {
+            setPersistedRouteId(identifier || '');
+          }
+        }
+
+        const targetIdentifier = identifier || route.routeCode;
+        if (!targetIdentifier) {
+          throw new Error('Missing route identifier for seat map');
+        }
+
+        const payload = await fetchRouteSeatMap(targetIdentifier, { travelDate });
+        if (isMounted) {
+          setSeatState({
+            seatMap: payload.seatMap || [],
+            summary: payload.summary || { total: 0, booked: 0, available: 0 },
+          });
+        }
+      } catch (error) {
+        if (isMounted) {
+          setSeatState(buildDefaultSeatState());
+          setSeatError(error.message);
+        }
+      } finally {
+        if (isMounted) {
+          setSeatLoading(false);
+        }
+      }
+    };
+
+    loadSeatState();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [route, travelDate]);
 
   if (!route) {
     return null;
@@ -30,15 +124,45 @@ const BookingModal = ({ route, travelDate, onClose, onConfirm, isSubmitting }) =
     setFormState(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleSeatToggle = seatId => {
+    const normalizedSeatId = String(seatId).toUpperCase();
+    setSelectedSeats(prev => {
+      if (prev.includes(normalizedSeatId)) {
+        return prev.filter(id => id !== normalizedSeatId);
+      }
+      if (prev.length >= MAX_SELECTABLE_SEATS) {
+        return prev;
+      }
+      return [...prev, normalizedSeatId];
+    });
+    setSeatError('');
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
+
+    if (!selectedSeats.length) {
+      setSeatError('Select at least one seat to continue');
+      return;
+    }
+
     onConfirm({
       ...formState,
-      seats: Number(formState.seats),
-      routeId: route.id,
+      seats: selectedSeats.length,
+      seatNumbers: selectedSeats,
+      routeId: persistedRouteId || route.id,
       travelDate,
+      routeSnapshot: buildExternalSnapshot(route),
     });
   };
+
+  const seatSummary = seatState.summary;
+  const totalAmount = useMemo(() => {
+    if (!selectedSeats.length) {
+      return route.fare;
+    }
+    return Number(route.fare ?? 0) * selectedSeats.length;
+  }, [route.fare, selectedSeats.length]);
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
@@ -88,19 +212,6 @@ const BookingModal = ({ route, travelDate, onClose, onConfirm, isSubmitting }) =
             />
           </label>
           <label className="flex flex-col gap-2 text-sm font-semibold text-slate-600">
-            Seats
-            <input
-              type="number"
-              min={1}
-              max={route.availableSeats}
-              name="seats"
-              value={formState.seats}
-              onChange={handleChange}
-              required
-              className="border border-slate-200 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          </label>
-          <label className="flex flex-col gap-2 text-sm font-semibold text-slate-600">
             Boarding Point
             <select
               name="boardingPoint"
@@ -124,17 +235,96 @@ const BookingModal = ({ route, travelDate, onClose, onConfirm, isSubmitting }) =
             />
           </label>
 
+          <div className="md:col-span-2 flex flex-col gap-4 bg-slate-50/60 border border-slate-100 rounded-2xl p-4">
+            <div className="flex flex-wrap gap-4 text-sm font-semibold text-slate-600">
+              <span>Available: <span className="text-green-600">{seatSummary.available}</span></span>
+              <span>Booked: <span className="text-orange-600">{seatSummary.booked}</span></span>
+              <span>Total: {seatSummary.total}</span>
+            </div>
+            {seatError && (
+              <p className="text-sm text-red-600 font-semibold">{seatError}</p>
+            )}
+            <div className="min-h-[140px]">
+              {seatLoading ? (
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
+                  {Array.from({ length: 20 }).map((_, index) => (
+                    <div key={index} className="h-10 rounded-xl bg-slate-200 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
+                  {seatState.seatMap.map(seat => {
+                    const isSelected = selectedSeats.includes(seat.id);
+                    const isBooked = seat.status !== 'available';
+                    const baseClasses = 'h-10 rounded-xl font-bold text-sm transition-colors flex items-center justify-center';
+                    const stateClasses = isSelected
+                      ? 'bg-red-600 text-white shadow-lg'
+                      : isBooked
+                        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                        : 'bg-white text-slate-800 border border-slate-200 hover:border-red-500';
+                    return (
+                      <button
+                        key={seat.id}
+                        type="button"
+                        disabled={isBooked}
+                        onClick={() => handleSeatToggle(seat.id)}
+                        className={`${baseClasses} ${stateClasses}`}
+                      >
+                        {seat.id}
+                      </button>
+                    );
+                  })}
+                  {!seatState.seatMap.length && !seatError && (
+                    <p className="col-span-full text-center text-sm text-slate-500">No seat layout available for this route.</p>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-wrap gap-2 text-sm">
+              {selectedSeats.length ? (
+                selectedSeats.map(seat => (
+                  <span key={seat} className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 text-red-600 rounded-full">
+                    {seat}
+                  </span>
+                ))
+              ) : (
+                <span className="text-slate-500">No seats selected yet.</span>
+              )}
+            </div>
+            {selectedSeats.length >= MAX_SELECTABLE_SEATS && (
+              <p className="text-xs text-orange-600 font-semibold">
+                You can select up to {MAX_SELECTABLE_SEATS} seats per booking.
+              </p>
+            )}
+            <div className="flex items-center gap-6 text-xs text-slate-500">
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded bg-white border border-slate-300" /> Available
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded bg-slate-200" /> Booked
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded bg-red-600" /> Selected
+              </div>
+            </div>
+          </div>
+
           <div className="md:col-span-2 flex flex-col gap-3 border-t border-slate-100 pt-4">
+            {route.externalSource && (
+              <p className="text-xs text-orange-600 font-semibold">
+                Live data route &mdash; we will secure seats and sync this coach with our database automatically.
+              </p>
+            )}
             <div className="flex items-center justify-between">
               <span className="text-sm text-slate-500">Total Amount</span>
-              <span className="text-2xl font-black text-slate-900">₹{route.fare * formState.seats}</span>
+              <span className="text-2xl font-black text-slate-900">₹{totalAmount}</span>
             </div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !selectedSeats.length}
               className="w-full py-4 bg-red-600 text-white font-black rounded-2xl shadow-lg hover:bg-red-700 disabled:opacity-50"
             >
-              {isSubmitting ? 'Confirming…' : 'Confirm Booking'}
+              {isSubmitting ? 'Confirming…' : selectedSeats.length ? `Confirm ${selectedSeats.length} Seat${selectedSeats.length > 1 ? 's' : ''}` : 'Select Seats'}
             </button>
           </div>
         </form>
