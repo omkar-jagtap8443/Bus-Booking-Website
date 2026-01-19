@@ -7,6 +7,7 @@ const bookingSchema = new mongoose.Schema(
     passengerEmail: { type: String, required: true, lowercase: true, trim: true },
     passengerPhone: { type: String, required: true, trim: true },
     seats: { type: Number, required: true, min: 1 },
+    seatNumbers: [{ type: String, trim: true }],
     travelDate: { type: String, required: true },
     boardingPoint: { type: String, required: true },
     status: {
