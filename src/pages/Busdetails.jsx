@@ -5,6 +5,7 @@ import Leftcard from '../components/BusBooking/Leftcard';
 import Sortcard from '../components/BusBooking/Sortcard';
 import BusResultCard from '../components/BusBooking/BusResultCard';
 import BookingModal from '../components/BusBooking/BookingModal';
+import TicketCard from '../components/BusBooking/TicketCard';
 import { useSearchContext } from '../context/SearchContext';
 import { createBooking, fetchRoutes } from '../services/busService';
 
@@ -105,11 +106,15 @@ const Busdetails = () => {
       const booking = await createBooking(payload);
       setBookingSuccess(booking);
       setBookingError('');
-      setRoutes(prev => prev.map(route => (
-        route.id === payload.routeId
-          ? { ...route, availableSeats: Math.max(route.availableSeats - payload.seats, 0) }
-          : route
-      )));
+      const seatsRequested = payload.seatNumbers?.length || payload.seats || 0;
+      setRoutes(prev => prev.map(route => {
+        const matchesRouteId = payload.routeId && route.id === payload.routeId;
+        const matchesRouteCode = booking?.routeSnapshot?.routeCode && route.routeCode === booking.routeSnapshot.routeCode;
+        if (matchesRouteId || matchesRouteCode) {
+          return { ...route, availableSeats: Math.max(route.availableSeats - seatsRequested, 0) };
+        }
+        return route;
+      }));
       setBookingRoute(null);
     } catch (submitError) {
       setBookingError(submitError.message);
@@ -173,9 +178,7 @@ const Busdetails = () => {
           />
 
           {bookingSuccess && (
-            <div className="bg-green-50 border border-green-200 text-green-700 rounded-3xl p-4">
-              Booking confirmed! Reference: <strong>{bookingSuccess.reference}</strong>
-            </div>
+            <TicketCard booking={bookingSuccess} onDismiss={() => setBookingSuccess(null)} />
           )}
 
           {bookingError && (
